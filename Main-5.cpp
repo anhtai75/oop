@@ -265,7 +265,7 @@ public:
     void dang_ky_nguoi_dung(string user, string pass, UserRole role) {
         for (const auto& nd : danh_sach_nguoi_dung) {
             if (nd.get_username() == user) {
-                cout << "❌ Lỗi: Username đã tồn tại." << endl;
+                cout << " Lỗi: Username đã tồn tại." << endl;
                 return;
             }
         }
@@ -280,7 +280,7 @@ public:
                 return nd.get_role();
             }
         }
-        cout << "❌ Lỗi: Sai Username hoặc Password." << endl;
+        cout << " Lỗi: Sai Username hoặc Password." << endl;
         return UserRole::UNKNOWN;
     }
 
@@ -301,7 +301,7 @@ public:
     void hien_thi_ma_muon_cua_bd(const string& ma_bd) const {
         const BanDoc* reader = tim_ban_doc(ma_bd); // SỬ DỤNG PHIÊN BẢN CONST
         if (!reader) {
-            cout << "❌ Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
+            cout << " Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
             return;
         }
         cout << "\n--- TÀI LIỆU ĐANG MƯỢN của BD Mã: " << ma_bd << " ---" << endl;
@@ -320,7 +320,7 @@ public:
         for (auto it = danh_sach_tai_lieu.begin(); it != danh_sach_tai_lieu.end(); ++it) {
             if (it->get_ma_tai_lieu() == ma_tl) {
                 if (it->get_trang_thai() == "Đã mượn") {
-                    cout << "❌ Lỗi: Tài liệu đang được mượn, không thể xóa." << endl;
+                    cout << " Lỗi: Tài liệu đang được mượn, không thể xóa." << endl;
                     return;
                 }
                 cout << " Đã xóa tài liệu: [" << ma_tl << "] - " << it->get_ten_tai_lieu() << endl;
@@ -328,7 +328,7 @@ public:
                 return;
             }
         }
-        cout << "❌ Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl;
+        cout << " Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl;
     }
 
     void hien_thi_tat_ca_tai_lieu() const {
@@ -404,7 +404,7 @@ public:
         BanDoc* reader = tim_ban_doc(ma_bd);
         TaiLieu* doc = tim_tai_lieu(ma_tl);
 
-        if (!reader || !doc) { cout << "❌ Lỗi: Mã bạn đọc hoặc tài liệu không hợp lệ." << endl; return; }
+        if (!reader || !doc) { cout << " Lỗi: Mã bạn đọc hoặc tài liệu không hợp lệ." << endl; return; }
         
         bool dang_muon = false;
         for (const auto& ma : reader->get_tai_lieu_dang_muon()) {
