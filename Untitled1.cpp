@@ -27,8 +27,8 @@ time_t string_to_time(const string& time_str) {
     struct tm t;
     for (int i=0;i<sizeof(t);++i) ((char*)&t)[i]=0;
     if (sscanf(time_str.c_str(), "%d-%d-%d %d:%d:%d",
-               &t.tm_year, &t.tm_mon, &t.tm_mday,
-               &t.tm_hour, &t.tm_min, &t.tm_sec) != 6) {
+                &t.tm_year, &t.tm_mon, &t.tm_mday,
+                &t.tm_hour, &t.tm_min, &t.tm_sec) != 6) {
         return 0;
     }
     t.tm_year -= 1900;
@@ -101,7 +101,7 @@ private:
 
 public:
     TaiLieu(string ma, string ten, string tg, int nam, string tl,
-           string loai_dt, string file, string link)
+            string loai_dt, string file, string link)
         : ma_tai_lieu(ma), ten_tai_lieu(ten), tac_gia(tg), nam_xuat_ban(nam),
           the_loai(tl), trang_thai("Con"), so_luot_muon(0),
           loai_dien_tu(loai_dt), ten_file(file), link_doc(link) {}
@@ -319,7 +319,7 @@ public:
     }
 
     void them_tai_lieu(string ten, string tac_gia, int nam_xb, string the_loai,
-                       string loai_dt, string file, string link) {
+                        string loai_dt, string file, string link) {
         string ma_tl = "D" + int_to_string(next_doc_id++);
         danh_sach_tai_lieu.push_back(TaiLieu(ma_tl, ten, tac_gia, nam_xb, the_loai, loai_dt, file, link));
         cout << "Them tai lieu thanh cong! Ma tai lieu: " << ma_tl << endl;
@@ -374,7 +374,7 @@ public:
                 lower_ten.find(ten_tim) != string::npos) {
                 cout << "\nDa tim thay tai lieu:" << endl;
                 danh_sach_tai_lieu[i].hien_thi();
-                cout << "   Ten File: " << danh_sach_tai_lieu[i].get_ten_file()
+                cout << "    Ten File: " << danh_sach_tai_lieu[i].get_ten_file()
                      << " | Link: " << danh_sach_tai_lieu[i].get_link_doc() << endl;
                 found = true;
             }
@@ -474,9 +474,31 @@ public:
         string ma_gd = "T" + int_to_string(next_transaction_id++);
         danh_sach_giao_dich.push_back(GiaoDich(ma_gd, DOC_TRUC_TUYEN, ma_bd, ma_tl, "", 0.0, ""));
         cout << "Ban doc " << reader->get_ho_ten() << " bat dau doc online." << endl;
-        cout << "   Loai: " << doc->get_loai_dien_tu() << endl;
-        cout << "   Link: " << doc->get_link_doc() << endl;
+        cout << "    Loai: " << doc->get_loai_dien_tu() << endl;
+        cout << "    Link: " << doc->get_link_doc() << endl;
     }
+    
+void xem_lich_su_giao_dich(const string& ma_bd) const {
+    const BanDoc* reader = tim_ban_doc_const(ma_bd); 
+    if (!reader) {
+        cout << "Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
+        return;
+    }
+
+    cout << "\n--- LỊCH SỬ GIAO DỊCH của BD: " << reader->get_ho_ten() << " (Mã: " << ma_bd << ") ---" << endl;
+    bool found = false;
+    for (const auto& trans : danh_sach_giao_dich) {
+        if (trans.get_ma_ban_doc() == ma_bd) {
+            trans.hien_thi();
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "Không có giao dịch nào được ghi lại." << endl;
+    }
+    cout << "---------------------------------------------------------" << endl;
+}
 
     void thong_ke_so_luot_doc() const {
         int count = 0;
@@ -505,6 +527,8 @@ public:
         }
         cout << "------------------------------------------" << endl;
     }
+    
+    
 
     void thong_ke_tai_lieu_pho_bien_nhat() const {
         cout << "\n--- TAI LIEU PHO BIEN NHAT (Theo luot Muon) ---" << endl;
@@ -794,7 +818,8 @@ void menu_thong_ke(ThuVien& lib, UserRole role, const string& user_id) {
             case 3: {
                 string ma_bd;
                 read_input_string("  Nhap Ma ban doc can xem lich su: ", ma_bd);
-                cout << "Chuc nang xem lich su da duoc goi cho BD: " << ma_bd << endl;
+                // Đã sửa: Gọi hàm xem_lich_su_giao_dich
+                lib.xem_lich_su_giao_dich(ma_bd); 
                 break;
             }
             case 0: break;
@@ -854,7 +879,7 @@ void menu_chinh(ThuVien& lib, UserRole& current_user_role, string& current_user_
 
     do {
         cout << "\n========================================================" << endl;
-        cout << "           HE THONG QUAN LY THU VIEN SO - DEMO" << endl;
+        cout << "            HE THONG QUAN LY THU VIEN SO - DEMO" << endl;
         cout << "================ MENU CHINH ================" << endl;
         cout << "1. Dang nhap" << endl;
         cout << "2. Dang ky tai khoan he thong (Admin/Thu thu/Ban doc)" << endl;
@@ -911,4 +936,3 @@ int main() {
 
     return 0;
 }
-
