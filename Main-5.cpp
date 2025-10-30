@@ -87,7 +87,7 @@ private:
     string the_loai;
     string trang_thai; 
     int so_luot_muon = 0; 
-    
+   
     string loai_dien_tu; 
     string ten_file;
     string link_doc;
@@ -221,7 +221,7 @@ private:
     vector<BanDoc> danh_sach_ban_doc;
     vector<TaiLieu> danh_sach_tai_lieu;
     vector<GiaoDich> danh_sach_giao_dich;
-    vector<NguoiDung> danh_sach_nguoi_dung; 
+    vector<NguoiDung> danh_sach_nguoi_dung;
     
     int next_doc_id = 101;
     int next_reader_id = 1;
@@ -265,12 +265,12 @@ public:
     void dang_ky_nguoi_dung(string user, string pass, UserRole role) {
         for (const auto& nd : danh_sach_nguoi_dung) {
             if (nd.get_username() == user) {
-                cout << " Lỗi: Username đã tồn tại." << endl;
+                cout << "Lỗi: Username đã tồn tại." << endl;
                 return;
             }
         }
         danh_sach_nguoi_dung.emplace_back(user, pass, role);
-        cout << " Đăng ký tài khoản [" << lay_vai_tro_string(role) << "] thành công! Username: " << user << endl;
+        cout << "Đăng ký tài khoản [" << lay_vai_tro_string(role) << "] thành công! Username: " << user << endl;
     }
 
     UserRole login_user(const string& user, const string& pass) {
@@ -280,7 +280,7 @@ public:
                 return nd.get_role();
             }
         }
-        cout << " Lỗi: Sai Username hoặc Password." << endl;
+        cout << "Lỗi: Sai Username hoặc Password." << endl;
         return UserRole::UNKNOWN;
     }
 
@@ -299,9 +299,9 @@ public:
     }
 
     void hien_thi_ma_muon_cua_bd(const string& ma_bd) const {
-        const BanDoc* reader = tim_ban_doc(ma_bd); // SỬ DỤNG PHIÊN BẢN CONST
+        const BanDoc* reader = tim_ban_doc(ma_bd); 
         if (!reader) {
-            cout << " Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
+            cout << "Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
             return;
         }
         cout << "\n--- TÀI LIỆU ĐANG MƯỢN của BD Mã: " << ma_bd << " ---" << endl;
@@ -320,15 +320,15 @@ public:
         for (auto it = danh_sach_tai_lieu.begin(); it != danh_sach_tai_lieu.end(); ++it) {
             if (it->get_ma_tai_lieu() == ma_tl) {
                 if (it->get_trang_thai() == "Đã mượn") {
-                    cout << " Lỗi: Tài liệu đang được mượn, không thể xóa." << endl;
+                    cout << "Lỗi: Tài liệu đang được mượn, không thể xóa." << endl;
                     return;
                 }
-                cout << " Đã xóa tài liệu: [" << ma_tl << "] - " << it->get_ten_tai_lieu() << endl;
+                cout << "Đã xóa tài liệu: [" << ma_tl << "] - " << it->get_ten_tai_lieu() << endl;
                 danh_sach_tai_lieu.erase(it);
                 return;
             }
         }
-        cout << " Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl;
+        cout << "Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl;
     }
 
     void hien_thi_tat_ca_tai_lieu() const {
@@ -362,7 +362,7 @@ public:
             transform(lower_ten_tl.begin(), lower_ten_tl.end(), lower_ten_tl.begin(), ::tolower);
 
             if (tl.get_loai_dien_tu() == loai_dt_tim && lower_ten_tl.find(lower_ten_tim) != string::npos) {
-                cout << "\n Đã tìm thấy tài liệu:" << endl;
+                cout << "\nĐã tìm thấy tài liệu:" << endl;
                 tl.hien_thi();
                 cout << "   Tên File: " << tl.get_ten_file() << " | Link: " << tl.get_link_doc() << endl;
                 found = true;
@@ -378,8 +378,8 @@ public:
         BanDoc* reader = tim_ban_doc(ma_bd);
         TaiLieu* doc = tim_tai_lieu(ma_tl);
 
-        if (!reader) { cout << " Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl; return; }
-        if (!doc) { cout << " Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl; return; }
+        if (!reader) { cout << "Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl; return; }
+        if (!doc) { cout << "Lỗi: Không tìm thấy tài liệu với mã " << ma_tl << endl; return; }
         if (doc->get_trang_thai() == "Đã mượn") { cout << " Lỗi: Tài liệu đã được mượn." << endl; return; }
         
         if (doc->get_loai_dien_tu() != "Sach In") {
@@ -404,7 +404,7 @@ public:
         BanDoc* reader = tim_ban_doc(ma_bd);
         TaiLieu* doc = tim_tai_lieu(ma_tl);
 
-        if (!reader || !doc) { cout << " Lỗi: Mã bạn đọc hoặc tài liệu không hợp lệ." << endl; return; }
+        if (!reader || !doc) { cout << "Lỗi: Mã bạn đọc hoặc tài liệu không hợp lệ." << endl; return; }
         
         bool dang_muon = false;
         for (const auto& ma : reader->get_tai_lieu_dang_muon()) {
@@ -414,7 +414,7 @@ public:
             }
         }
         if (!dang_muon) { 
-            cout << " Lỗi: Bạn đọc này không đang mượn tài liệu có mã " << ma_tl << "." << endl; 
+            cout << "Lỗi: Bạn đọc này không đang mượn tài liệu có mã " << ma_tl << "." << endl; 
             return; 
         }
 
@@ -440,7 +440,7 @@ public:
                 phi_tre_han = so_ngay_tre * phi_mot_ngay;
                 ghi_chu = "Tre han " + to_string(so_ngay_tre) + " ngay.";
 
-                cout << "CHÚ Ý: Trả trễ " << so_ngay_tre << " ngày." << endl;
+                cout << " CHÚ Ý: Trả trễ " << so_ngay_tre << " ngày." << endl;
             }
         }
 
@@ -468,11 +468,33 @@ public:
         string ma_gd = "T" + to_string(next_transaction_id++);
         danh_sach_giao_dich.emplace_back(ma_gd, LoaiGiaoDich::DOC_TRUC_TUYEN, ma_bd, ma_tl);
         
-        cout << " Bạn đọc " << reader->get_ho_ten() << " bắt đầu đọc trực tuyến." << endl;
+        cout << "Bạn đọc " << reader->get_ho_ten() << " bắt đầu đọc trực tuyến." << endl;
         cout << "   Loại: " << doc->get_loai_dien_tu() << endl;
         cout << "   Link truy cập: " << doc->get_link_doc() << endl;
     }
     
+    void xem_lich_su_giao_dich(const string& ma_bd) const {
+        const BanDoc* reader = tim_ban_doc(ma_bd);
+        if (!reader) {
+            cout << "Lỗi: Không tìm thấy bạn đọc với mã " << ma_bd << endl;
+            return;
+        }
+
+        cout << "\n--- LỊCH SỬ GIAO DỊCH của BD: " << reader->get_ho_ten() << " (Mã: " << ma_bd << ") ---" << endl;
+        bool found = false;
+        for (const auto& trans : danh_sach_giao_dich) {
+            if (trans.get_ma_ban_doc() == ma_bd) {
+                trans.hien_thi();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            cout << "Không có giao dịch nào được ghi lại." << endl;
+        }
+        cout << "---------------------------------------------------------" << endl;
+    }
+
     void thong_ke_so_luot_doc() const {
         int count = 0;
         map<string, int> doc_count; 
@@ -485,10 +507,10 @@ public:
         }
 
         cout << "\n--- THỐNG KÊ ĐỌC ONLINE ---" << endl;
-        cout << " Tổng số lượt đọc online: " << count << endl;
+        cout << "️ Tổng số lượt đọc online: " << count << endl;
         if (count == 0) { cout << "Chưa có lượt đọc online nào." << endl; return; }
         
-        cout << " Chi tiết theo Mã tài liệu:" << endl;
+        cout << "Chi tiết theo Mã tài liệu:" << endl;
         for (const auto& pair : doc_count) {
             TaiLieu* doc = const_cast<ThuVien*>(this)->tim_tai_lieu(pair.first); 
             cout << "  - [" << pair.first << "] " << (doc ? doc->get_ten_tai_lieu() : "Không rõ") 
@@ -536,7 +558,7 @@ public:
         }
 
         if (favorite_genres.empty()) {
-            cout << "Lịch sử giao dịch trống. Không thể đề xuất." << endl;
+            cout << " Lịch sử giao dịch trống. Không thể đề xuất." << endl;
             return;
         }
 
@@ -550,7 +572,7 @@ public:
         }
 
         cout << "\n--- ĐỀ XUẤT TÀI LIỆU cho " << reader->get_ho_ten() << " ---" << endl;
-        cout << "Thể loại yêu thích nhất: [" << top_genre << "] (Tương tác: " << max_count << " lần)" << endl;
+        cout << " Thể loại yêu thích nhất: [" << top_genre << "] (Tương tác: " << max_count << " lần)" << endl;
         cout << "Các tài liệu liên quan (chưa mượn):" << endl;
 
         bool found_rec = false;
@@ -610,7 +632,7 @@ void menu_dang_ky_he_thong(ThuVien& lib) {
 
 void menu_quan_ly_ban_doc(ThuVien& lib, UserRole role) {
     if (role == UserRole::BAN_DOC) {
-        cout << " Lỗi: Bạn đọc không có quyền quản lý bạn đọc khác." << endl;
+        cout << "Lỗi: Bạn đọc không có quyền quản lý bạn đọc khác." << endl;
         return;
     }
 
@@ -654,7 +676,7 @@ void menu_quan_ly_ban_doc(ThuVien& lib, UserRole role) {
 
 void menu_quan_ly_tai_lieu(ThuVien& lib, UserRole role) {
     if (role == UserRole::BAN_DOC) {
-        cout << " Lỗi: Bạn đọc không có quyền quản lý tài liệu." << endl;
+        cout << "Lỗi: Bạn đọc không có quyền quản lý tài liệu." << endl;
         return;
     }
 
@@ -666,7 +688,7 @@ void menu_quan_ly_tai_lieu(ThuVien& lib, UserRole role) {
     do {
         cout << "\n--- MENU QUẢN LÝ TÀI LIỆU ---" << endl;
         cout << "1. Thêm mới tài liệu (Sách In/Số hóa)" << endl;
-        cout << "2. Xóa tài liệu theo Mã" << endl; 
+        cout << "2. Xóa tài liệu theo Mã" << endl; // NEW: Chức năng Xóa
         cout << "3. Xem tất cả tài liệu" << endl;
         cout << "4. Tìm kiếm Tài liệu Điện tử (theo loại và tên)" << endl; 
         cout << "0. Quay lại" << endl;
@@ -704,7 +726,7 @@ void menu_quan_ly_tai_lieu(ThuVien& lib, UserRole role) {
 
                 lib.them_tai_lieu(ten, tac_gia, nam_xb, the_loai, loai_dt, ten_file, link_doc);
                 break;
-            case 2: 
+            case 2: // NEW: Xóa tài liệu
                 read_input_string("  Nhập Mã tài liệu cần xóa: ", ma_tl);
                 lib.xoa_tai_lieu(ma_tl);
                 break;
@@ -722,7 +744,7 @@ void menu_quan_ly_tai_lieu(ThuVien& lib, UserRole role) {
 
 void menu_giao_dich(ThuVien& lib, UserRole role) {
     if (role == UserRole::ADMIN || role == UserRole::THU_THU) {
-        cout << " Lỗi: Chỉ bạn đọc mới được thực hiện các giao dịch mượn/đọc." << endl;
+        cout << "Lỗi: Chỉ bạn đọc mới được thực hiện các giao dịch mượn/đọc." << endl;
         return;
     }
     
@@ -767,11 +789,12 @@ void menu_giao_dich(ThuVien& lib, UserRole role) {
 
 void menu_thong_ke(ThuVien& lib, UserRole role, const string& user_id) {
     if (role == UserRole::BAN_DOC && user_id != "") {
-        cout << " Lỗi: Bạn đọc chỉ được xem lịch sử giao dịch cá nhân." << endl;
+        cout << "Lỗi: Bạn đọc chỉ được xem lịch sử giao dịch cá nhân." << endl;
         return;
     }
 
     int sub_choice;
+    string ma_bd;
 
     do {
         cout << "\n--- MENU THỐNG KÊ ---" << endl;
@@ -795,9 +818,8 @@ void menu_thong_ke(ThuVien& lib, UserRole role, const string& user_id) {
                 lib.thong_ke_so_luot_doc();
                 break;
             case 3: {
-                string ma_bd;
                 read_input_string("  Nhập Mã bạn đọc cần xem lịch sử: ", ma_bd);
-                cout << "Chức năng xem lịch sử đã được gọi cho BD: " << ma_bd << endl;
+                lib.xem_lich_su_giao_dich(ma_bd); // ĐÃ TRIỂN KHAI
                 break;
             }
             case 0: break;
@@ -820,7 +842,7 @@ void menu_chinh_chuc_nang(ThuVien& lib, UserRole role, const string& user_id) {
         if (role == UserRole::BAN_DOC) {
             cout << "1. Giao dịch Mượn/Trả & Đọc Online" << endl;
             cout << "2. Xem chi tiết Mã tài liệu đang mượn" << endl;
-            cout << "3. Đề xuất Tài liệu" << endl; 
+            cout << "3. Đề xuất Tài liệu" << endl; // NEW: Đề xuất
         }
         cout << "0. Đăng xuất" << endl;
         cout << "Chọn chức năng: ";
@@ -901,6 +923,7 @@ void menu_chinh(ThuVien& lib, UserRole& current_user_role, string& current_user_
     } while (choice != 0);
 }
 
+
 int main() {
     cout << fixed << setprecision(0); 
 
@@ -910,17 +933,21 @@ int main() {
 
     myLibrary.dang_ky_ban_doc("Nguyen Van A", "999111", "Ha Noi"); 
     myLibrary.them_tai_lieu("C++ Nâng Cao", "Tac Gia Mau", 2020, "Lap Trinh", "Sach In", "", ""); 
-    myLibrary.them_tai_lieu("Lich Su The Gioi", "Mau Lich Su", 2022, "Lich Su", "Ebook", "LS.pdf", "https://link_doc/ls"); 
+    myLibrary.them_tai_lieu("Lich Su The Gioi", "Mau Lich Su", 2022, "Lich Su", "Ebook", "LS.pdf", "https://link_doc/ls"); // D102
     myLibrary.them_tai_lieu("Giao trinh OOP", "GV A", 2023, "Lap Trinh", "Sach In", "", ""); 
     myLibrary.them_tai_lieu("Tieu thuyet tinh yeu", "NN A", 2021, "Van hoc", "Sach In", "", ""); 
-    myLibrary.them_tai_lieu("Van hoc hien dai", "NN B", 2023, "Van hoc", "Ebook", "VH.epub", "https://vh.com/vh"); 
+    myLibrary.them_tai_lieu("Van hoc hien dai", "NN B", 2023, "Van hoc", "Ebook", "VH.epub", "https://vh.com/vh"); // D105
     
     myLibrary.muon_tai_lieu("R1", "D101");
     myLibrary.tra_tai_lieu("R1", "D101");
     myLibrary.doc_online("R1", "D102"); 
-    myLibrary.doc_online("R1", "D105");
+    myLibrary.doc_online("R1", "D105"); 
     
     myLibrary.muon_tai_lieu("R1", "D104"); 
+
+    cout << "\n--- TRẠNG THÁI DỮ LIỆU KHỞI TẠO ---" << endl;
+    myLibrary.hien_thi_tat_ca_tai_lieu();
+    cout << "------------------------------------" << endl;
 
     menu_chinh(myLibrary, current_user_role, current_user_id);
 
